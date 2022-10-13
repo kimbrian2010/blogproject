@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -32,3 +33,9 @@ def sign_in(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse('index'))
     return render(request, 'blog_login/login.html', context={'form':form})
+
+
+@login_required
+def sign_out(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('blog_login:signin'))
