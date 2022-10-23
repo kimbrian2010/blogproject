@@ -9,7 +9,7 @@ class Blog(models.Model):
     blog_title = models.CharField(max_length=250, verbose_name='Type Blog Title')
     slug = models.SlugField(max_length=264, unique=True)
     blog_content = models.TextField(verbose_name='Do you want to share something?')
-    blog_image = models.ImageField(upload_to='blog_image',verbose_name='Blog Image')
+    blog_image = models.ImageField(upload_to='blog_image', verbose_name='Blog Image')
     publish_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     
