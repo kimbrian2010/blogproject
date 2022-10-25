@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'blog_app',
     'blog_login',
     'crispy_forms',
+    'django_cleanup.apps.CleanupConfig', #add django_cleanup app after 'pip install django_cleanup'
 ]
 
 # Indicate bootstrap, uni-form supported here

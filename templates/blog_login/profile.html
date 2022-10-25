@@ -3,11 +3,20 @@
 
 {% block content %}
 <h2>My Profile</h2>
-
+{% if user.user_profile %}        <!-- 'user_profile' is the user related name in Profile model/table-->
+<img src="/media/{{user.user_profile.profile_pic}}" class="rounded-circle" width="120px">      <!--accessing profile pic using user related name-->
+<br><br>
+<a href="{% url 'blog_login:change-profile-pic' %}" class="btn btn-info btn-sm">Change Picture</a>
+{% else %}
+<img src="/media/shefa.jpg" class="rounded-circle" width="120px">      <!--dispalying alternative pic-->
+<br><br>
+<a href="{% url 'blog_login:add-profile-pic' %}" class="btn btn-info btn-sm">Change Picture</a>
+{% endif %}
+<br>
 <p> Username : {{user.username}}</p>
 <p> Email : {{user.email}}</p>
 <p> Name : {{user.first_name}} {{user.last_name}}</p>
 <br>
-<a class="btn btn-warning btn-sm" href="{% url 'blog_login:edit-profile'%}">Edit Profile</a>
+<a class="btn btn-warning btn-sm" href="{% url 'blog_login:edit-profile'%}">Change Details</a>
 
 {% endblock %}
