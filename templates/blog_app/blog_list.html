@@ -2,6 +2,10 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<h2> List of blogs</h2>
+{% for blog in blogs %}
+<h2>{{blog.blog_title}}</h2>
+<h6>{{blog.publish_date}}</h6>
+
+{% endfor %}
 
 {% endblock %}
