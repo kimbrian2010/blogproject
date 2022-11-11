@@ -28,10 +28,14 @@ class CreateBlog(LoginRequiredMixin,CreateView):
     
     def form_valid(self, form):
         blog_obj = form.save(commit = False)
-        blog_obj.author = self.request.user #assigning current user to auth of created user
+        blog_obj.author = self.request.user #assigning current user to author of created user
         title = blog_obj.blog_title
         blog_obj.slug = title.replace(" ", "-")+ "-" + str(uuid.uuid4()) #replacing spaces in the title with "-"
         blog_obj.save()
         return HttpResponseRedirect(reverse('index'))
     
     
+def blog_details(request, pk):
+    blog = Blog.objects.get(pk=pk)
+        
+    return render(request, 'blog_app/blog_details.html', context={'blog':blog})
