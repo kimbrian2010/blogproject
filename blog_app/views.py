@@ -6,6 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid 
+from .forms import CommentForm
 
 
 # Create your views here.
@@ -37,5 +38,16 @@ class CreateBlog(LoginRequiredMixin,CreateView):
     
 def blog_details(request, pk):
     blog = Blog.objects.get(pk=pk)
+    
+    comment_form = CommentForm()
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.blog = blog # blog is a ForeignKey in Comment Comment Model connecting to Blog model
+            comment.save()
+            return HttpResponseRedirect(reverse('blog_app:blog-details', kwargs={'pk':pk})) #Return to details page with correct pk(id)
+            
         
-    return render(request, 'blog_app/blog_details.html', context={'blog':blog})
+    return render(request, 'blog_app/blog_details.html', context={'blog':blog, 'comment_form':comment_form}) #pass Blog and CommentForm context here
