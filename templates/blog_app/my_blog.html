@@ -1,11 +1,12 @@
 {% extends '../base.html' %}
 {% load custom_filter %}
-{% block title %} Home {% endblock %}
+{% block title %} My Blog {% endblock %}
 
 {% block content %}
-{% for blog in blogs %}
-<h2>{{blog.blog_title}}</h2>
-<h6><i>{{blog.publish_date}}</i></h6>
+<h2> My Blogs</h2>
+{% for blog in user.blog_author.all%} <!--blog_author is related field in  Blog table-->
+<h3>{{blog.blog_title}}</h3>
+<h6>{{blog.publish_date}}</h6>
 
 <div class="row">
     <div class="col-sm-4">
@@ -15,13 +16,13 @@
         <p>{{blog.blog_content|range_filter|linebreaks}}</p>
         <a href="{% url 'blog_app:blog-details' pk=blog.id %}">Read more</a>
         <br>
-        <br>
         <h6>{{blog.liked_blog.count}} likes | {{blog.blog_comment.count}} comments</h6> <!--liked_blog and blog_comment are related field names in table Liked $ Comment-->
-        <h6>Posted By : <a href="#">{{blog.author}}</a></h6>
+
     </div>
-
 </div>
-
+<hr>
+<a href="{% url 'blog_app:edit-blog' pk=blog.pk %}" class="btn btn-info btn-sm">Edit</a>
 
 {% endfor %}
+
 {% endblock %}
